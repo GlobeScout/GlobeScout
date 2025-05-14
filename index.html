@@ -5,62 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Auswandern Tipps – Login</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    .intro-section {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 40px;
-      padding: 40px;
-      flex-wrap: wrap;
-    }
-
-    .intro-section img {
-      max-width: 400px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    .intro-text {
-      max-width: 500px;
-    }
-
-    .intro-text h1 {
-      font-size: 2.5rem;
-      color: #2c3e50;
-    }
-
-    .intro-text p {
-      font-size: 1.2rem;
-      color: #444;
-      line-height: 1.6;
-    }
-  </style>
 </head>
 <body>
-  <div class="container">
+  <!-- 🔝 Logo oben -->
+  <header class="header">
     <img src="logo.png" alt="Logo" class="logo" />
+  </header>
 
-    <!-- 🔰 INFO-BEREICH: Bild + Beschreibung -->
-    <div class="intro-section">
-      <img src="auswandern.jpg" alt="Auswandern Bild" />
-      <div class="intro-text">
-        <h1>Willkommen bei GlobeScout!</h1>
-        <p>
-          Unsere Mission ist es, dir den Weg ins Ausland zu erleichtern. Egal ob du nach Kanada, Portugal oder Thailand willst – wir geben dir praktische Tipps, Checklisten und Erfahrungsberichte rund ums Auswandern.
-          <br><br>
-          Von Steuern bis zur Jobsuche – bei uns bekommst du ehrliche Informationen aus erster Hand. Starte heute dein neues Leben im Ausland!
-        </p>
-      </div>
+  <!-- 🧭 Produktbeschreibung mit Bild -->
+  <section class="intro">
+    <img src="logo.png" alt="Auswandern Bild" class="intro-image" />
+    <div class="intro-text">
+      <h1>Willkommen bei GlobeScout!</h1>
+      <p>
+        Du träumst vom Leben im Ausland? Wir helfen dir dabei. Unsere Plattform bietet dir wertvolle Tipps, Checklisten und Erfahrungsberichte rund ums Auswandern – egal ob nach Kanada, Spanien oder Bali. 
+        <br><br>
+        Lass dich inspirieren, plane clever und starte dein neues Leben vorbereitet!
+      </p>
     </div>
+  </section>
 
-    <!-- 🔐 LOGIN-TABS -->
+  <!-- 🔐 Login/Registrierung -->
+  <main class="auth-container">
     <div class="tabs">
       <button id="show-login" class="active">Login</button>
       <button id="show-signup">Registrieren</button>
     </div>
 
-    <!-- 🔐 LOGIN -->
+    <!-- 🔐 Login-Formular -->
     <form id="login-form">
       <h2>Login</h2>
       <input type="email" id="login-email" placeholder="E-Mail" required />
@@ -69,7 +41,7 @@
       <p id="login-message" class="message"></p>
     </form>
 
-    <!-- 🆕 REGISTRIERUNG -->
+    <!-- 🆕 Registrierungs-Formular -->
     <form id="signup-form" style="display: none">
       <h2>Registrieren</h2>
       <input type="email" id="signup-email" placeholder="E-Mail" required />
@@ -77,11 +49,11 @@
       <button type="submit">Registrieren</button>
       <p id="signup-message" class="message"></p>
     </form>
-  </div>
+  </main>
 
+  <!-- 📜 Scripts -->
   <script type="module" src="script.js"></script>
   <script>
-    // 🧠 Tabs umschalten zwischen Login & Registrierung
     const showLoginBtn = document.getElementById('show-login')
     const showSignupBtn = document.getElementById('show-signup')
     const loginForm = document.getElementById('login-form')
