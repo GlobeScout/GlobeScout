@@ -124,5 +124,40 @@ button:hover {
   font-size: 1.2rem;
   line-height: 1.6;
 }
+/* Beide Sektionen sollen Vollbild sein */
+.fullscreen {
+  height: 100vh;
+  width: 100%;
+  scroll-snap-align: start;
+}
+
+/* Startseite */
+.startseite {
+  background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
+              url('background.png') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Zweite Seite – weißer Bereich */
+.white-section {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Optional smooth scroll snapping */
+html {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+  height: 100%;
+}
 
 
