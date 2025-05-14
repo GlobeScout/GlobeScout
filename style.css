@@ -72,15 +72,28 @@ button:hover {
   color: white;
 }
 
-/* Intro-Bereich richtig anordnen */
+/* Intro-Textbereich mit Bild – weiter unten platzieren */
 .intro {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  gap: 40px;
-  padding: 40px 20px;
+  align-items: center;
   flex-wrap: wrap;
+  gap: 40px;
   text-align: left;
+  margin-top: auto;
+  margin-bottom: 40px;
+}
+/* Login/Registrierung zentral fixiert */
+.auth-container {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  position: relative;
+  top: 50px;
 }
 
 /* Bild kleiner machen */
