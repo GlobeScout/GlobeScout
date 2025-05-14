@@ -104,29 +104,4 @@ button:hover {
   border-radius: 10px;
   box-shadow: 0 0 8px rgba(0,0,0,0.1);
 }
-/* 🧱 Zusatzbereich unter der Auth-Box */
-.extra-section {
-  background-color: #f9f9f9;
-  padding: 4rem 1rem;
-  text-align: center;
-}
-
-.extra-section h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-
-.extra-section p {
-  max-width: 600px;
-  margin: 0 auto 2rem;
-  line-height: 1.6;
-}
-
-.extra-image {
-  max-width: 300px;
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-}
 
