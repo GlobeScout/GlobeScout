@@ -1,68 +1,68 @@
-// Supabase client importieren (über CDN mit ESM-Support)
+// Supabase importieren
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-// 🟩 Deine Supabase-Konfiguration (ersetzen durch deine echten Werte)
-const SUPABASE_URL = 'https://nvjgrewshdpwbebbkmiq.supabase.co'       // z.B. https://xyzcompany.supabase.co
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im52amdyZXdzaGRwd2JlYmJrbWlxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyMjI0NjgsImV4cCI6MjA2Mjc5ODQ2OH0.uUVy7mC9EmSeDVqLdmWwTV0FouLZj97_fdbq8yAMufM'      // anon key, kein service_role!
-
-// 🔧 Supabase Client initialisieren
+// 🔧 Supabase-Projekt konfigurieren (ersetzen!)
+const SUPABASE_URL = 'https://your-project.supabase.co'
+const SUPABASE_KEY = 'your-anon-public-api-key'
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 
-// 🔍 Referenzen zu HTML-Elementen
-const form = document.getElementById('login-form')
-const message = document.getElementById('message')
-const { data, error } = await supabase.auth.signUp({
-  email: 'dein@email.de',
-  password: 'deinPasswort123'
-})
+console.log('✅ Supabase verbunden:', supabase)
 
-// 🧪 Optional: Konsole debuggen
-console.log('Supabase verbunden:', supabase)
+// 🔐 LOGIN-FORMULAR
+const loginForm = document.getElementById('login-form')
+const loginMessage = document.getElementById('login-message')
 
-form.addEventListener('submit', async (e) => {
+loginForm.addEventListener('submit', async (e) => {
   e.preventDefault()
 
-  // E-Mail und Passwort aus dem Formular
-  const email = document.getElementById('email').value
-  const password = document.getElementById('password').value
+  const email = document.getElementById('login-email').value
+  const password = document.getElementById('login-password').value
 
-  message.textContent = '⏳ Anmeldung läuft...'
-  message.style.color = 'gray'
+  loginMessage.textContent = '⏳ Anmeldung läuft...'
+  loginMessage.style.color = 'gray'
 
-  // 🔐 Login bei Supabase Auth
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password
   })
 
-  // Fehlerbehandlung
   if (error) {
-    console.error('Login-Fehler:', error.message)
-    message.textContent = '❌ Fehler: ' + error.message
-    message.style.color = 'red'
+    loginMessage.textContent = '❌ Fehler: ' + error.message
+    loginMessage.style.color = 'red'
     return
   }
 
-  // Erfolg
-  message.textContent = '✅ Erfolgreich eingeloggt!'
-  message.style.color = 'green'
+  loginMessage.textContent = '✅ Login erfolgreich!'
+  loginMessage.style.color = 'green'
+  console.log('👤 Angemeldet als:', data.user)
+})
 
-  const user = data.user
-  console.log('👤 Angemeldeter Nutzer:', user)
 
-  // 🔍 Optional: Lade Profil aus "profiles"-Tabelle
-  const { data: profile, error: profileError } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', user.id)
-    .single()
+// 🆕 REGISTRIERUNGS-FORMULAR
+const signupForm = document.getElementById('signup-form')
+const signupMessage = document.getElementById('signup-message')
 
-  if (profileError) {
-    console.warn('⚠️ Kein Profil gefunden oder Fehler:', profileError.message)
-  } else {
-    console.log('👤 Profil geladen:', profile)
+signupForm.addEventListener('submit', async (e) => {
+  e.preventDefault()
+
+  const email = document.getElementById('signup-email').value
+  const password = document.getElementById('signup-password').value
+
+  signupMessage.textContent = '⏳ Registrierung läuft...'
+  signupMessage.style.color = 'gray'
+
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password
+  })
+
+  if (error) {
+    signupMessage.textContent = '❌ Fehler: ' + error.message
+    signupMessage.style.color = 'red'
+    return
   }
 
-  // ✅ Hier kannst du z.B. weiterleiten
-  // window.location.href = "/dashboard.html"
+  signupMessage.textContent = '✅ Registriert! Bitte E-Mail bestätigen.'
+  signupMessage.style.color = 'green'
+  console.log('👤 Registrierter Benutzer:', data.user)
 })
