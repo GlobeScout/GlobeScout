@@ -11,6 +11,10 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 // 🔍 Referenzen zu HTML-Elementen
 const form = document.getElementById('login-form')
 const message = document.getElementById('message')
+const { data, error } = await supabase.auth.signUp({
+  email: 'dein@email.de',
+  password: 'deinPasswort123'
+})
 
 // 🧪 Optional: Konsole debuggen
 console.log('Supabase verbunden:', supabase)
