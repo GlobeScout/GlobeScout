@@ -1,4 +1,4 @@
-// Supabase importieren
+ // Supabase importieren
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
 // 🔧 Supabase-Projekt konfigurieren (ersetzen!)
