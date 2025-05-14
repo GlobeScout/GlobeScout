@@ -104,5 +104,25 @@ button:hover {
   border-radius: 10px;
   box-shadow: 0 0 8px rgba(0,0,0,0.1);
 }
+.scroll-section {
+  background-color: white;
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+.scroll-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.scroll-section p {
+  max-width: 600px;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
 
 
