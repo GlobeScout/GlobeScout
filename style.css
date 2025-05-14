@@ -69,3 +69,29 @@ button:hover {
   background-color: #4CAF50;
   color: white;
 }
+/* Logo kleiner machen */
+.logo {
+  height: 60px;
+  max-width: 150px;
+}
+
+/* Intro-Bereich richtig anordnen */
+.intro {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* <-- Text nach oben */
+  gap: 40px;
+  padding: 40px 20px;
+  background-color: #eaf2f8;
+  flex-wrap: wrap;
+  text-align: left;
+}
+
+/* Bild kleiner machen */
+.intro-image {
+  width: 300px; /* vorher war 400px */
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
