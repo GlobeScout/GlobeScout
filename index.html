@@ -3,13 +3,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Supabase Auth App</title>
+  <title>Auswandern Tipps – Login</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .intro-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      padding: 40px;
+      flex-wrap: wrap;
+    }
+
+    .intro-section img {
+      max-width: 400px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .intro-text {
+      max-width: 500px;
+    }
+
+    .intro-text h1 {
+      font-size: 2.5rem;
+      color: #2c3e50;
+    }
+
+    .intro-text p {
+      font-size: 1.2rem;
+      color: #444;
+      line-height: 1.6;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <img src="logo.png" alt="Logo" class="logo" />
 
+    <!-- 🔰 INFO-BEREICH: Bild + Beschreibung -->
+    <div class="intro-section">
+      <img src="auswandern.jpg" alt="Auswandern Bild" />
+      <div class="intro-text">
+        <h1>Willkommen bei GlobeScout!</h1>
+        <p>
+          Unsere Mission ist es, dir den Weg ins Ausland zu erleichtern. Egal ob du nach Kanada, Portugal oder Thailand willst – wir geben dir praktische Tipps, Checklisten und Erfahrungsberichte rund ums Auswandern.
+          <br><br>
+          Von Steuern bis zur Jobsuche – bei uns bekommst du ehrliche Informationen aus erster Hand. Starte heute dein neues Leben im Ausland!
+        </p>
+      </div>
+    </div>
+
+    <!-- 🔐 LOGIN-TABS -->
     <div class="tabs">
       <button id="show-login" class="active">Login</button>
       <button id="show-signup">Registrieren</button>
