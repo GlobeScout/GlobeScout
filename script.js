@@ -2,8 +2,8 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
 // 🔧 Supabase-Projekt konfigurieren (ersetzen!)
-const SUPABASE_URL = 'https://your-project.supabase.co'
-const SUPABASE_KEY = 'your-anon-public-api-key'
+const SUPABASE_URL = 'https://nvjgrewshdpwbebbkmiq.supabase.co'
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im52amdyZXdzaGRwd2JlYmJrbWlxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyMjI0NjgsImV4cCI6MjA2Mjc5ODQ2OH0.uUVy7mC9EmSeDVqLdmWwTV0FouLZj97_fdbq8yAMufM'
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 
 console.log('✅ Supabase verbunden:', supabase)
