@@ -66,14 +66,3 @@ signupForm.addEventListener('submit', async (e) => {
   signupMessage.style.color = 'green'
   console.log('👤 Registrierter Benutzer:', data.user)
 })
-// Nach erfolgreichem Login
-loginMessage.textContent = '✅ Login erfolgreich!'
-loginMessage.style.color = 'green'
-
-// Login/Signup-Formulare ausblenden
-document.getElementById('login-form').style.display = 'none'
-document.getElementById('signup-form').style.display = 'none'
-document.querySelector('.tabs').style.display = 'none'
-
-// Willkommensansicht anzeigen
-document.getElementById('welcome-view').style.display = 'block'
