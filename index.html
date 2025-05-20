@@ -74,20 +74,30 @@
 
   <!-- 🔳 NEU: Drei große Blöcke -->
 <section class="info-blocks">
+  <div class="info-blocks">
   <div class="info-block">
-    <button class="block-toggle">Was ist GlobeScout ❓ </button>
+    <button class="block-toggle">Was ist GlobeScout ❓</button>
     <div class="block-content">
-      <p>Plane deine Auswanderung Schritt für Schritt – mit Checklisten, Tipps zur Wohnungssuche, Versicherungen u.v.m.</p>
+      <p>GlobeScout hilft dir beim Auswandern mit Tipps, Checklisten und echten Erfahrungsberichten. Egal ob Kanada oder Thailand – wir sind für dich da.</p>
     </div>
   </div>
 
   <div class="info-block">
     <button class="block-toggle">Wieso Auswandern ❓</button>
     <div class="block-content">
-      <p>Welche Papiere brauchst du wirklich? Wir zeigen dir, was du für Visa, Steuer und Bank brauchst.</p>
+      <p>Registriere dich kostenlos, wähle dein Ziel und erhalte Schritt-für-Schritt-Anleitungen, To-Do-Listen und Community-Austausch.</p>
     </div>
   </div>
-</section>
+
+<script>
+  document.querySelectorAll('.block-toggle').forEach(button => {
+    button.addEventListener('click', () => {
+      const content = button.nextElementSibling;
+      content.classList.toggle('show');
+    });
+  });
+</script>
+
 
   <!-- ❓ NEU: Platzhalter für FAQ -->
   <section class="faq-section">
