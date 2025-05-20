@@ -1,85 +1,102 @@
-// Supabase importieren
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-const SUPABASE_URL = 'https://nvjgrewshdpwbebbkmiq.supabase.co'
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
+// Supabase
+const supabase = createClient(
+  'https://nvjgrewshdpwbebbkmiq.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'   // verkürzt
+)
 
-console.log('✅ Dashboard geladen')
+// ⚙️ Länder‑Daten (Mini‑Dataset)
+const COUNTRIES = [
+  { name: 'Portugal',  cost: 75,  safety: 65, surf: true,  climate: 'warm',  lang: ['portuguese','english'] },
+  { name: 'Thailand',  cost: 50,  safety: 60, surf: true,  climate: 'hot',   lang: ['thai','english'] },
+  { name: 'Kanada',    cost: 85,  safety: 90, surf: false, climate: 'cold',  lang: ['english','french'] },
+  { name: 'Schweiz',   cost:120,  safety: 95, surf: false, climate: 'cold',  lang: ['german','french','italian'] },
+  { name: 'Spanien',   cost: 80,  safety: 70, surf: true,  climate: 'warm',  lang: ['spanish','english'] }
+]
 
+// 🔐 User‑Check + DOM‑Ready
 document.addEventListener('DOMContentLoaded', async () => {
-  const logoutBtn = document.getElementById('logout-button')
-  const form = document.getElementById('profile-form')
-  const recommendationDiv = document.getElementById('recommendation')
-  const stars = document.querySelectorAll('.star')
-
-  // 🔐 Nutzer holen
   const { data: { user } } = await supabase.auth.getUser()
-  const userEmail = user?.email
+  if (!user) return (window.location.href = 'index.html')
+  const email = user.email
 
-  if (!userEmail) {
-    alert('Nicht eingeloggt – Weiterleitung zur Startseite.')
-    window.location.href = 'index.html'
-    return
-  }
+  // --- Logout
+  document.getElementById('logout-button')
+    .addEventListener('click', async () => {
+      await supabase.auth.signOut()
+      location.href = 'index.html'
+    })
 
-  // 🚪 Logout
-  logoutBtn.addEventListener('click', async () => {
-    await supabase.auth.signOut()
-    window.location.href = 'index.html'
-  })
+  // --- Formular
+  document.getElementById('profile-form')
+    .addEventListener('submit', async (e) => {
+      e.preventDefault()
 
-  // 🧠 Länder-Empfehlungs-Logik
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault()
+      const hobbies = document.getElementById('hobbies').value.toLowerCase()
+      const income  = +document.getElementById('income').value
+      const prefs   = document.getElementById('preferences').value.toLowerCase()
 
-    const hobbies = document.getElementById('hobbies').value.toLowerCase()
-    const income = parseInt(document.getElementById('income').value)
-    const prefs = document.getElementById('preferences').value.toLowerCase()
+      // 🧮  SIMPLE  SCORING
+      let best   = null
+      let bestPt = -Infinity
 
-    let country = 'Kanada'
+      COUNTRIES.forEach(c => {
+        let pts = 0
+        // Einkommen – je höher Budget, desto eher hochpreisige Länder
+        pts -= Math.abs(c.cost - income / 50)         // grobe Normierung
 
-    if (income < 1500) {
-      country = 'Thailand'
-    } else if (income > 3000 && prefs.includes('sicherheit')) {
-      country = 'Schweiz'
-    } else if (hobbies.includes('surfen') || prefs.includes('warm')) {
-      country = 'Portugal'
-    } else if (prefs.includes('sprache') && prefs.includes('englisch')) {
-      country = 'Irland'
-    }
+        // Sicherheit
+        if (prefs.includes('sicherheit')) pts += c.safety / 10
 
-    const message = `📬 Empfohlenes Land: ${country}`
-    recommendationDiv.textContent = message
+        // Klima‑Vorlieben
+        if (prefs.includes('warm')  && c.climate === 'warm')  pts += 5
+        if (prefs.includes('kalt')  && c.climate === 'cold')  pts += 5
+        if (prefs.includes('hot')   && c.climate === 'hot')   pts += 5
 
-    // 📧 E-Mail senden über Supabase Edge Function oder DB (Simulation hier)
-    const { error } = await supabase
-      .from('emails')
-      .insert([{ to: userEmail, message }])
+        // Sprache
+        if (prefs.includes('englisch') && c.lang.includes('english')) pts += 5
+        if (prefs.includes('german')   && c.lang.includes('german'))  pts += 5
 
-    if (!error) {
-      alert('Empfehlung wurde an deine E-Mail geschickt!')
-    } else {
-      console.error('Fehler beim E-Mail-Versand:', error.message)
-    }
-  })
+        // Surf / Outdoor
+        if (hobbies.includes('surfen') && c.surf) pts += 7
+        if (hobbies.includes('ski')    && c.climate === 'cold') pts += 4
 
-  // ⭐ Feedback
-  stars.forEach(star => {
+        // Update best
+        if (pts > bestPt) { bestPt = pts; best = c }
+      })
+
+      if (!best) best = COUNTRIES[0]                 // Fallback
+      const resultText = `🏆 Dein perfektes Land: <strong>${best.name}</strong>`
+
+      // → UI
+      document.getElementById('recommendation').innerHTML = resultText
+
+      // --- E‑MAIL via Edge Function
+      await fetch('https://nvjgrewshdpwbebbkmiq.functions.supabase.co/send-email', {
+        method : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body   : JSON.stringify({
+          to      : email,
+          country : best.name,
+          cost    : best.cost,
+          safety  : best.safety
+        })
+      })
+      .then(() => alert('Empfehlung wurde gemailt!'))
+      .catch(err => console.error('Mail‑Fehler:', err))
+    })
+
+  // ⭐ Feedback (1–5)
+  document.querySelectorAll('.star').forEach(star => {
     star.addEventListener('click', async () => {
-      const value = parseInt(star.dataset.value)
-
-      stars.forEach(s => s.classList.remove('selected'))
-      for (let i = 0; i < value; i++) {
-        stars[i].classList.add('selected')
-      }
-
-      console.log(`🌟 Feedback: ${value} Sterne`)
-
-      // Feedback speichern
-      await supabase
-        .from('feedback')
-        .insert([{ email: userEmail, stars: value }])
+      const v = +star.dataset.value
+      // UI
+      document.querySelectorAll('.star').forEach(s => {
+        s.classList.toggle('selected', +s.dataset.value <= v)
+      })
+      // DB
+      await supabase.from('feedback').insert([{ email, stars: v }])
     })
   })
 })
