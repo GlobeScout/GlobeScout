@@ -71,13 +71,10 @@ signupForm.addEventListener('submit', async (e) => {
   signupMessage.style.color = 'green'
   console.log('👤 Registrierter Benutzer:', data.user)
 })
-// Jeder Block unabhängig: Toggle mit CSS-Klasse
+// Akkordeon-Logik für Info-Blöcke
 document.querySelectorAll('.block-toggle').forEach(button => {
   button.addEventListener('click', () => {
     const content = button.nextElementSibling
-    content.classList.toggle('show')
-  })
-})
 
     // Sichtbarkeit umschalten
     if (content.style.display === 'block') {
