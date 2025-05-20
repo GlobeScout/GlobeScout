@@ -8,12 +8,58 @@ const supabase = createClient(
 
 // ⚙️ Länder‑Daten (Mini‑Dataset)
 const COUNTRIES = [
-  { name: 'Portugal',  cost: 75,  safety: 65, surf: true,  climate: 'warm',  lang: ['portuguese','english'] },
-  { name: 'Thailand',  cost: 50,  safety: 60, surf: true,  climate: 'hot',   lang: ['thai','english'] },
-  { name: 'Kanada',    cost: 85,  safety: 90, surf: false, climate: 'cold',  lang: ['english','french'] },
-  { name: 'Schweiz',   cost:120,  safety: 95, surf: false, climate: 'cold',  lang: ['german','french','italian'] },
-  { name: 'Spanien',   cost: 80,  safety: 70, surf: true,  climate: 'warm',  lang: ['spanish','english'] }
+  // Europa
+  { name:'Portugal',      cost: 75, safety: 70, surf:true,  climate:'warm',      lang:['portuguese','english'] },
+  { name:'Spanien',       cost: 80, safety: 70, surf:true,  climate:'warm',      lang:['spanish','english'] },
+  { name:'Griechenland',  cost: 65, safety: 65, surf:true,  climate:'warm',      lang:['greek','english'] },
+  { name:'Italien',       cost: 90, safety: 75, surf:true,  climate:'warm',      lang:['italian','english'] },
+  { name:'Frankreich',    cost: 95, safety: 80, surf:true,  climate:'temperate', lang:['french','english'] },
+  { name:'Deutschland',   cost:100, safety: 85, surf:false, climate:'temperate', lang:['german','english'] },
+  { name:'Niederlande',   cost: 95, safety: 85, surf:false, climate:'temperate', lang:['dutch','english'] },
+  { name:'Dänemark',      cost:110, safety: 90, surf:false, climate:'cold',      lang:['danish','english'] },
+  { name:'Norwegen',      cost:115, safety: 92, surf:false, climate:'cold',      lang:['norwegian','english'] },
+  { name:'Schweiz',       cost:120, safety: 95, surf:false, climate:'cold',      lang:['german','french','italian'] },
+  { name:'Österreich',    cost:105, safety: 90, surf:false, climate:'cold',      lang:['german','english'] },
+  { name:'Irland',        cost: 95, safety: 80, surf:true,  climate:'temperate', lang:['english','irish'] },
+  { name:'Türkei',        cost: 55, safety: 60, surf:true,  climate:'warm',      lang:['turkish','english'] },
+
+  // Nord‑ & Mittelamerika
+  { name:'Kanada',        cost: 85, safety: 90, surf:false, climate:'cold',      lang:['english','french'] },
+  { name:'USA',           cost:100, safety: 75, surf:true,  climate:'temperate', lang:['english','spanish'] },
+  { name:'Mexiko',        cost: 60, safety: 45, surf:true,  climate:'hot',       lang:['spanish','english'] },
+  { name:'Costa Rica',    cost: 65, safety: 70, surf:true,  climate:'tropical',  lang:['spanish','english'] },
+  { name:'Kolumbien',     cost: 55, safety: 50, surf:true,  climate:'tropical',  lang:['spanish'] },
+
+  // Südamerika
+  { name:'Brasilien',     cost: 60, safety: 50, surf:true,  climate:'tropical',  lang:['portuguese'] },
+  { name:'Argentinien',   cost: 50, safety: 55, surf:false, climate:'temperate', lang:['spanish'] },
+  { name:'Chile',         cost: 70, safety: 70, surf:true,  climate:'temperate', lang:['spanish'] },
+
+  // Afrika / Nahost
+  { name:'Südafrika',     cost: 55, safety: 40, surf:true,  climate:'warm',      lang:['english','afrikaans'] },
+  { name:'Marokko',       cost: 50, safety: 55, surf:true,  climate:'warm',      lang:['arabic','french'] },
+  { name:'Ägypten',       cost: 45, safety: 50, surf:true,  climate:'hot',       lang:['arabic','english'] },
+  { name:'VAE',           cost:100, safety: 80, surf:true,  climate:'hot',       lang:['arabic','english'] },
+
+  // Asien
+  { name:'Thailand',      cost: 50, safety: 60, surf:true,  climate:'hot',       lang:['thai','english'] },
+  { name:'Vietnam',       cost: 40, safety: 55, surf:true,  climate:'hot',       lang:['vietnamese','english'] },
+  { name:'Indonesien',    cost: 45, safety: 55, surf:true,  climate:'tropical',  lang:['indonesian','english'] },
+  { name:'Philippinen',   cost: 45, safety: 55, surf:true,  climate:'tropical',  lang:['english','filipino'] },
+  { name:'Malaysia',      cost: 55, safety: 65, surf:true,  climate:'tropical',  lang:['malay','english'] },
+  { name:'Japan',         cost:100, safety: 88, surf:true,  climate:'temperate', lang:['japanese','english'] },
+  { name:'Südkorea',      cost: 90, safety: 85, surf:false, climate:'temperate', lang:['korean','english'] },
+  { name:'Indien',        cost: 35, safety: 45, surf:true,  climate:'hot',       lang:['hindi','english'] },
+  { name:'Sri Lanka',     cost: 40, safety: 55, surf:true,  climate:'hot',       lang:['sinhala','tamil','english'] },
+  { name:'Nepal',         cost: 30, safety: 50, surf:false, climate:'cold',      lang:['nepali','english'] },
+  { name:'China',         cost: 70, safety: 60, surf:false, climate:'temperate', lang:['mandarin'] },
+  { name:'Singapur',      cost:110, safety: 92, surf:false, climate:'tropical',  lang:['english','mandarin','malay','tamil'] },
+
+  // Ozeanien
+  { name:'Australien',    cost:110, safety: 80, surf:true,  climate:'hot',       lang:['english'] },
+  { name:'Neuseeland',    cost:100, safety: 85, surf:true,  climate:'temperate', lang:['english','maori'] }
 ]
+
 
 // 🔐 User‑Check + DOM‑Ready
 document.addEventListener('DOMContentLoaded', async () => {
