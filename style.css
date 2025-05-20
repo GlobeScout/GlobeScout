@@ -119,64 +119,109 @@ body {
   background-color: #f9f9f9;
 }
 
+/* Container der 2 Blöcke fixieren */
 .info-blocks {
   display: flex;
-  gap: 20px;
   justify-content: center;
-  flex-wrap: wrap;
-  max-width: 1200px;
+  gap: 40px;
+  max-width: 900px;
   margin: 80px auto;
   padding: 0 20px;
 }
 
+/* Jeder Block bekommt fixe Breite, wächst aber in der Höhe */
 .info-block {
-  flex: 1 1 300px;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  overflow: hidden;
+  width: 400px;
   background-color: white;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  min-width: 280px;
-  max-width: 350px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: visible; /* wichtig, damit ausklappbarer Inhalt nicht abgeschnitten wird */
+  display: flex;
+  flex-direction: column;
 }
 
+/* Button bleibt oben */
 .block-toggle {
-  width: 100%;
-  text-align: left;
-  padding: 1rem;
-  font-size: 1.2rem;
   background-color: #333;
   color: white;
-  border: none;
+  padding: 1rem;
+  font-size: 1.2rem;
   cursor: pointer;
-  outline: none;
+  border: none;
+  border-radius: 12px 12px 0 0;
+  text-align: left;
   transition: background-color 0.3s;
+  outline: none;
 }
 
 .block-toggle:hover {
   background-color: #444;
 }
 
+/* Klappbarer Bereich */
 .block-content {
   padding: 1rem;
-  display: none;
-  animation: fadeIn 0.3s ease-in-out;
+  background-color: #f9f9f9;
+  color: #222;
+  display: none; /* standard versteckt */
+  border-radius: 0 0 12px 12px;
+  line-height: 1.5;
+  font-size: 1rem;
+  /* position: relative; Keine absolute Position hier, sonst Inhalt schwer lesbar */
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.block-content.show {
+  display: block;
 }
 
-/* FAQ-Bereich */
+/* FAQ-Bereich neu gestalten */
 .faq-section {
-  padding: 80px 20px;
-  background-color: #fff;
+  max-width: 900px;
+  margin: 80px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
   text-align: center;
 }
 
+/* Überschrift im FAQ */
 .faq-section h2 {
   font-size: 2rem;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+}
+
+/* Längliches Feld */
+.plans-container {
+  background-color: #e8f0fe;
+  border-radius: 12px;
+  padding: 20px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 30px;
+}
+
+/* Zwei kleine Kästchen nebeneinander */
+.plan-boxes {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.plan-box {
+  background-color: #f4f6fb;
+  border: 1px solid #a0b9f5;
+  border-radius: 12px;
+  width: 200px;
+  height: 120px;
+  padding: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  font-size: 1rem;
+  color: #34495e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
