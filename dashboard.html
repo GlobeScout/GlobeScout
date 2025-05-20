@@ -43,3 +43,43 @@
 
     .stars {
       display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+
+    .star {
+      font-size: 2rem;
+      cursor: pointer;
+      color: lightgray;
+    }
+
+    .star.selected {
+      color: gold;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌍 GlobeScout: Finde dein perfektes Land!</h1>
+
+  <form id="profile-form">
+    <input type="text" id="hobbies" placeholder="Deine Hobbys" required />
+    <input type="number" id="income" placeholder="Monatliches Einkommen (€)" required />
+    <textarea id="preferences" placeholder="Was ist dir wichtig? (z.B. Klima, Sicherheit, Sprache)" required></textarea>
+    <button type="submit">🌎 Land empfehlen lassen</button>
+  </form>
+
+  <div id="recommendation"></div>
+
+  <div class="stars" id="feedback-stars">
+    <span class="star" data-value="1">★</span>
+    <span class="star" data-value="2">★</span>
+    <span class="star" data-value="3">★</span>
+    <span class="star" data-value="4">★</span>
+    <span class="star" data-value="5">★</span>
+  </div>
+  <div id="logout-container">
+    <button id="logout-button">🚪 Logout</button>
+  </div>
+</body>
+</html>
