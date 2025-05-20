@@ -75,6 +75,9 @@ signupForm.addEventListener('submit', async (e) => {
 document.querySelectorAll('.block-toggle').forEach(button => {
   button.addEventListener('click', () => {
     const content = button.nextElementSibling
+    content.classList.toggle('show')
+  })
+})
 
     // Sichtbarkeit umschalten
     if (content.style.display === 'block') {
