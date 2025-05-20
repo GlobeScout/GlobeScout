@@ -90,11 +90,11 @@ button:hover {
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   width: 100%;
   max-width: 400px;
-  margin: 0 auto;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin: 40px auto; /* statt absoluter Position */
+  position: relative;
+  transform: none;
+  top: auto;
+  left: auto;
 }
 
 /* Bild kleiner machen */
