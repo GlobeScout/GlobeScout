@@ -71,3 +71,16 @@ signupForm.addEventListener('submit', async (e) => {
   signupMessage.style.color = 'green'
   console.log('👤 Registrierter Benutzer:', data.user)
 })
+// Akkordeon-Logik für Info-Blöcke
+document.querySelectorAll('.block-toggle').forEach(button => {
+  button.addEventListener('click', () => {
+    const content = button.nextElementSibling
+
+    // Sichtbarkeit umschalten
+    if (content.style.display === 'block') {
+      content.style.display = 'none'
+    } else {
+      content.style.display = 'block'
+    }
+  })
+})
