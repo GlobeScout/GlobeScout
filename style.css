@@ -168,4 +168,15 @@ body {
   to { opacity: 1; }
 }
 
+/* FAQ-Bereich */
+.faq-section {
+  padding: 80px 20px;
+  background-color: #fff;
+  text-align: center;
+}
+
+.faq-section h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
 
