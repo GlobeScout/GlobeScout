@@ -36,7 +36,11 @@ loginForm.addEventListener('submit', async (e) => {
   loginMessage.style.color = 'green'
   console.log('👤 Angemeldet als:', data.user)
 })
-
+// Weiterleitung zu dashboard.html
+setTimeout(() => {
+  console.log('🔁 Weiterleitung zu dashboard.html ...')
+  window.location.href = 'dashboard.html'
+}, 500)
 
 // 🆕 REGISTRIERUNGS-FORMULAR
 const signupForm = document.getElementById('signup-form')
