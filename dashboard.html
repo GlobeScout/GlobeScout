@@ -1,11 +1,35 @@
-<!-- dashboard.html -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Dashboard</title>
+  <title>GlobeScout Dashboard/title>
+  <script type="module" src="dashboard.js"></script>
+  <style>
+    body {
+      background: white;
+      font-family: sans-serif;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    button {
+      margin-top: 2rem;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      border: none;
+      background-color: #f44336;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #d32f2f;
+    }
+  </style>
 </head>
-<body style="background: white;">
+<body>
   <h1>🎉 Willkommen im Dashboard</h1>
+  <button id="logout-button">🚪 Logout</button>
 </body>
 </html>
