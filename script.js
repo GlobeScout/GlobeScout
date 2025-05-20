@@ -35,6 +35,12 @@ loginForm.addEventListener('submit', async (e) => {
   loginMessage.textContent = '✅ Login erfolgreich!'
   loginMessage.style.color = 'green'
   console.log('👤 Angemeldet als:', data.user)
+ // Weiterleitung nach erfolgreichem Login
+setTimeout(() => {
+  console.log('🔁 Weiterleitung zu dashboard.html ...')
+  window.location.href = 'dashboard.html'
+}, 1000)  // 1 Sekunde Warten für die Erfolgsmeldung
+
 })
 
 // 🆕 REGISTRIERUNGS-FORMULAR
