@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>GlobeScout Dashboard/title>
+  <title>GlobeScout Dashboard</title>
   <script type="module" src="dashboard.js"></script>
   <style>
     body {
@@ -12,24 +12,34 @@
       padding: 2rem;
     }
 
+    input, select, textarea {
+      display: block;
+      margin: 1rem auto;
+      padding: 0.5rem;
+      width: 80%;
+      max-width: 400px;
+    }
+
     button {
-      margin-top: 2rem;
+      margin-top: 1rem;
       padding: 1rem 2rem;
       font-size: 1rem;
       border: none;
-      background-color: #f44336;
+      background-color: #4caf50;
       color: white;
       border-radius: 8px;
       cursor: pointer;
     }
 
     button:hover {
-      background-color: #d32f2f;
+      background-color: #388e3c;
     }
-  </style>
-</head>
-<body>
-  <h1>🎉 Willkommen im Dashboard</h1>
-  <button id="logout-button">🚪 Logout</button>
-</body>
-</html>
+
+    #recommendation {
+      margin-top: 2rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .stars {
+      display: flex;
