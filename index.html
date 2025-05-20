@@ -89,25 +89,31 @@
     </div>
   </div>
 
-<script>
-  document.querySelectorAll('.block-toggle').forEach(button => {
-    button.addEventListener('click', () => {
-      const content = button.nextElementSibling;
-      content.classList.toggle('show');
-    });
-  });
-</script>
-  <!-- ❓ NEU: Platzhalter für FAQ -->
-<section class="faq-section">
-  <h2>Unsere Pläne</h2>
-  <div class="plans-container">
-    Unsere Pläne
-  </div>
-  <div class="plan-boxes">
-    <div class="plan-box">Plan Basic: Einstieg ins Ausland</div>
-    <div class="plan-box">Plan Premium: Komplettbetreuung</div>
-  </div>
-</section>
+  <!-- Unsere Pläne Sektion -->
+  <section class="plans-section">
+    <h2>Unsere Pläne</h2>
+    <div class="plans-container">
+      <div class="plan-box">Plan 1</div>
+      <div class="plan-box">Plan 2</div>
+    </div>
+  </section>
+
+  <script>
+    // Akkordeon-Logik für Info-Blöcke
+    document.querySelectorAll('.block-toggle').forEach(button => {
+      button.addEventListener('click', () => {
+        const content = button.nextElementSibling
+        if (content.style.display === 'block') {
+          content.style.display = 'none'
+        } else {
+          content.style.display = 'block'
+        }
+      })
+    })
+  </script>
+
+</body>
+</html>
 
 </body>
 </html>
