@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (!user || userError) return (window.location.href = 'index.html')
   const email = user.email
 
-  // Länder laden
   const { data: countriesData, error: countriesError } = await supabase
     .from('countries')
     .select('*')
@@ -23,17 +22,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const COUNTRIES = countriesData
 
-  // 🔄 Debug-Ausgabe
-  console.log('Länder geladen:', COUNTRIES)
-
-  // --- Logout
   document.getElementById('logout-button')
     .addEventListener('click', async () => {
       await supabase.auth.signOut()
       location.href = 'index.html'
     })
 
-  // --- Formular
   document.getElementById('profile-form')
     .addEventListener('submit', async (e) => {
       e.preventDefault()
@@ -48,47 +42,32 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       COUNTRIES.forEach(c => {
         let pts = 0
-
-        // Einkommen
         pts -= Math.abs(c.cost - income / 50)
-
-        // Steuerpräferenz
         if (c.taxRate !== null) {
           pts -= Math.abs(c.taxRate - taxPref) / 2
         }
 
-        // Sicherheit
         if (prefs.includes('sicherheit')) pts += c.safety / 10
-
-        // Klima
         if (prefs.includes('warm') && c.climate === 'warm') pts += 5
         if (prefs.includes('kalt') && c.climate === 'cold') pts += 5
         if (prefs.includes('hot') && c.climate === 'hot') pts += 5
         if (prefs.includes('tropisch') && c.climate === 'tropical') pts += 5
         if (prefs.includes('temperiert') && c.climate === 'temperate') pts += 5
 
-        // Sprache
         if (prefs.includes('englisch') && c.lang.includes('english')) pts += 5
         if (prefs.includes('deutsch') && c.lang.includes('german')) pts += 5
 
-        // Hobbys
         if (hobbies.includes('surfen') && c.surf) pts += 7
         if (hobbies.includes('ski') && c.climate === 'cold') pts += 4
 
-        // Aktivitäten
         if (c.activities && Array.isArray(c.activities)) {
           c.activities.forEach(act => {
             if (hobbies.includes(act.toLowerCase())) pts += 3
           })
         }
 
-        // Natur
         if (prefs.includes('natur')) pts += c.nature
-
-        // LGBT
         if (prefs.includes('lgbt')) pts += c.lgbtFriendly
-
-        // Nachtleben
         if (prefs.includes('nachtleben')) pts += c.nightlife
 
         if (pts > bestPt) {
@@ -103,14 +82,36 @@ document.addEventListener('DOMContentLoaded', async () => {
       document.getElementById('recommendation').innerHTML = resultText
     })
 
-  // ⭐ Bewertung
-  document.querySelectorAll('.star').forEach(star => {
+  const stars = document.querySelectorAll('.star')
+  const feedbackDiv = document.getElementById('feedback')
+
+  stars.forEach(star => {
+    star.addEventListener('mouseenter', () => {
+      const val = +star.dataset.value
+      stars.forEach(s => {
+        s.classList.toggle('hover', +s.dataset.value <= val)
+      })
+    })
+
+    star.addEventListener('mouseleave', () => {
+      stars.forEach(s => s.classList.remove('hover'))
+    })
+
     star.addEventListener('click', async () => {
       const v = +star.dataset.value
-      document.querySelectorAll('.star').forEach(s => {
+      stars.forEach(s => {
         s.classList.toggle('selected', +s.dataset.value <= v)
       })
       await supabase.from('feedback').insert([{ email, stars: v }])
+
+      const msg = document.createElement('p')
+      msg.textContent = '🎉 Danke für dein Feedback!'
+      msg.style.color = 'green'
+      msg.style.marginTop = '1rem'
+      if (!document.querySelector('#feedback p.feedback-msg')) {
+        msg.classList.add('feedback-msg')
+        feedbackDiv.appendChild(msg)
+      }
     })
   })
 })
