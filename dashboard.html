@@ -66,11 +66,13 @@
   <h1>🌍 GlobeScout: Finde dein perfektes Land!</h1>
 
   <form id="profile-form">
-    <input type="text" id="hobbies" placeholder="Deine Hobbys" required />
-    <input type="number" id="income" placeholder="Monatliches Einkommen (€)" required />
-    <textarea id="preferences" placeholder="Was ist dir wichtig? (z.B. Klima, Sicherheit, Sprache)" required></textarea>
-    <button type="submit">🌎 Land empfehlen lassen</button>
-  </form>
+  <input type="text" id="hobbies" placeholder="Deine Hobbys (z. B. Surfen, Wandern)" required />
+  <input type="number" id="income" placeholder="Monatliches Einkommen (€)" required />
+  <input type="number" id="taxPref" placeholder="Bevorzugte Steuerlast (%)" required />
+  <textarea id="preferences" placeholder="Was ist dir wichtig? (z.B. Klima: warm, Sprache: englisch, Sicherheit, Natur...)" required></textarea>
+  <button type="submit">🌎 Land empfehlen lassen</button>
+</form>
+
 <!-- Hier wird das Ergebnis angezeigt -->
 <div id="recommendation"></div>
 
