@@ -1,6 +1,5 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-// Supabase
 const supabase = createClient(
   'https://nvjgrewshdpwbebbkmiq.supabase.co',
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im52amdyZXdzaGRwd2JlYmJrbWlxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyMjI0NjgsImV4cCI6MjA2Mjc5ODQ2OH0.uUVy7mC9EmSeDVqLdmWwTV0FouLZj97_fdbq8yAMufM'
@@ -84,32 +83,35 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const stars = document.querySelectorAll('.star')
   const feedbackDiv = document.getElementById('feedback')
+  let selectedValue = 0
 
   stars.forEach(star => {
-    star.addEventListener('mouseenter', () => {
+    star.addEventListener('mouseover', () => {
       const val = +star.dataset.value
       stars.forEach(s => {
         s.classList.toggle('hover', +s.dataset.value <= val)
       })
     })
 
-    star.addEventListener('mouseleave', () => {
+    star.addEventListener('mouseout', () => {
       stars.forEach(s => s.classList.remove('hover'))
     })
 
     star.addEventListener('click', async () => {
       const v = +star.dataset.value
+      selectedValue = v
       stars.forEach(s => {
         s.classList.toggle('selected', +s.dataset.value <= v)
       })
       await supabase.from('feedback').insert([{ email, stars: v }])
 
-      const msg = document.createElement('p')
-      msg.textContent = '🎉 Danke für dein Feedback!'
-      msg.style.color = 'green'
-      msg.style.marginTop = '1rem'
-      if (!document.querySelector('#feedback p.feedback-msg')) {
+      // Dankesnachricht anzeigen (nur einmal)
+      if (!document.querySelector('.feedback-msg')) {
+        const msg = document.createElement('p')
+        msg.textContent = '🎉 Danke für dein Feedback!'
         msg.classList.add('feedback-msg')
+        msg.style.color = 'green'
+        msg.style.marginTop = '1rem'
         feedbackDiv.appendChild(msg)
       }
     })
