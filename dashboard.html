@@ -5,110 +5,114 @@
   <title>GlobeScout Dashboard</title>
   <script type="module" src="dashboard.js"></script>
   <style>
-  body {
-    background-image: url('background2.png'); /* Dateiname genau hier eintragen */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    font-family: sans-serif;
-    text-align: center;
-    padding: 2rem;
-    color: #000;
-  }
+    body {
+      background-image: url('background2.png'); /* Dein Bild im selben Ordner */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      font-family: sans-serif;
+      text-align: center;
+      padding: 2rem;
+      color: #000;
+    }
 
-  form, #recommendation, #feedback, #logout-container {
-    background-color: rgba(255, 255, 255, 0.85);
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin: 1rem auto;
-    max-width: 500px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
+    h1 {
+      color: white;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5); /* Lesbarkeit verbessern */
+    }
 
-  input, select, textarea {
-    display: block;
-    margin: 1rem auto;
-    padding: 0.5rem;
-    width: 80%;
-    max-width: 400px;
-  }
+    form, #recommendation, #feedback, #logout-container {
+      background-color: rgba(255, 255, 255, 0.85);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1rem auto;
+      max-width: 500px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
 
-  button {
-    margin-top: 1rem;
-    padding: 1rem 2rem;
-    font-size: 1rem;
-    border: none;
-    background-color: #4caf50;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-  }
+    input, select, textarea {
+      display: block;
+      margin: 1rem auto;
+      padding: 0.5rem;
+      width: 80%;
+      max-width: 400px;
+    }
 
-  button:hover {
-    background-color: #388e3c;
-  }
+    button {
+      margin-top: 1rem;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      border: none;
+      background-color: #4caf50;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
 
-  #recommendation {
-    margin-top: 2rem;
-    font-size: 1.2rem;
-    font-weight: bold;
-  }
+    button:hover {
+      background-color: #388e3c;
+    }
 
-  .stars {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 2rem;
-  }
+    #recommendation {
+      margin-top: 2rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
 
-  .star {
-    font-size: 2.4rem;
-    cursor: pointer;
-    color: lightgray;
-    transition: color 0.2s;
-  }
+    .stars {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
 
-  .star.hover,
-  .star.selected {
-    color: gold;
-  }
-</style>
+    .star {
+      font-size: 2.4rem;
+      cursor: pointer;
+      color: lightgray;
+      transition: color 0.2s;
+    }
 
+    .star.hover,
+    .star.selected {
+      color: gold;
+    }
+  </style>
 </head>
 
 <body>
   <h1>🌍 GlobeScout: Finde dein perfektes Land!</h1>
 
   <form id="profile-form">
-  <input type="text" id="hobbies" placeholder="Deine Hobbys (z. B. Surfen, Wandern)" required />
-  <input type="number" id="income" placeholder="Monatliches Einkommen (€)" required />
-  <input type="number" id="taxPref" placeholder="Bevorzugte Steuerlast (%)" required />
-  <textarea id="preferences" placeholder="Was ist dir wichtig? (z.B. Klima: warm, Sprache: englisch, Sicherheit, Natur...)" required></textarea>
-  <button type="submit">🌎 Land empfehlen lassen</button>
-</form>
+    <input type="text" id="hobbies" placeholder="Deine Hobbys (z. B. Surfen, Wandern)" required />
+    <input type="number" id="income" placeholder="Monatliches Einkommen (€)" required />
+    <input type="number" id="taxPref" placeholder="Bevorzugte Steuerlast (%)" required />
+    <textarea id="preferences" placeholder="Was ist dir wichtig? (z.B. Klima: warm, Sprache: englisch, Sicherheit, Natur...)" required></textarea>
+    <button type="submit">🌎 Land empfehlen lassen</button>
+  </form>
 
-<!-- Hier wird das Ergebnis angezeigt -->
-<div id="recommendation"></div>
+  <div id="recommendation"></div>
 
   <div id="feedback">
-  <p>Wie zufrieden bist du mit dem Ergebnis?</p>
-  <div>
-    <span class="star" data-value="1">⭐</span>
-    <span class="star" data-value="2">⭐</span>
-    <span class="star" data-value="3">⭐</span>
-    <span class="star" data-value="4">⭐</span>
-    <span class="star" data-value="5">⭐</span>
+    <p>Wie zufrieden bist du mit dem Ergebnis?</p>
+    <div>
+      <span class="star" data-value="1">⭐</span>
+      <span class="star" data-value="2">⭐</span>
+      <span class="star" data-value="3">⭐</span>
+      <span class="star" data-value="4">⭐</span>
+      <span class="star" data-value="5">⭐</span>
+    </div>
   </div>
-
 
   <div id="logout-container">
     <button id="logout-button">🚪 Logout</button>
   </div>
-<a href="https://www.instagram.com/globescout_/" target="_blank" id="instagram-link" aria-label="Instagram" rel="noopener noreferrer">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="#E4405F" viewBox="0 0 24 24" width="50" height="50">
-    <path d="M7.75 2h8.5A5.75 5.75 0 0122 7.75v8.5A5.75 5.75 0 0116.25 22h-8.5A5.75 5.75 0 012 16.25v-8.5A5.75 5.75 0 017.75 2zm0 1.5A4.25 4.25 0 003.5 7.75v8.5A4.25 4.25 0 007.75 20.5h8.5a4.25 4.25 0 004.25-4.25v-8.5A4.25 4.25 0 0016.25 3.5h-8.5zM12 7a5 5 0 110 10 5 5 0 010-10zm0 1.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7zm4.75-.75a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5z"/>
-  </svg>
-</a>
+
+  <a href="https://www.instagram.com/globescout_/" target="_blank" id="instagram-link" aria-label="Instagram" rel="noopener noreferrer">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="#E4405F" viewBox="0 0 24 24" width="50" height="50">
+      <path d="M7.75 2h8.5A5.75 5.75 0 0122 7.75v8.5A5.75 5.75 0 0116.25 22h-8.5A5.75 5.75 0 012 16.25v-8.5A5.75 5.75 0 017.75 2zm0 1.5A4.25 4.25 0 003.5 7.75v8.5A4.25 4.25 0 007.75 20.5h8.5a4.25 4.25 0 004.25-4.25v-8.5A4.25 4.25 0 0016.25 3.5h-8.5zM12 7a5 5 0 110 10 5 5 0 010-10zm0 1.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7zm4.75-.75a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5z"/>
+    </svg>
+  </a>
 </body>
 </html>
