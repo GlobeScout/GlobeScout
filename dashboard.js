@@ -103,14 +103,42 @@ document.addEventListener('DOMContentLoaded', async () => {
       document.getElementById('recommendation').innerHTML = resultText
     })
 
-  // ⭐ Bewertung
-  document.querySelectorAll('.star').forEach(star => {
-    star.addEventListener('click', async () => {
-      const v = +star.dataset.value
-      document.querySelectorAll('.star').forEach(s => {
-        s.classList.toggle('selected', +s.dataset.value <= v)
+    // ⭐ Bewertung
+  const stars = document.querySelectorAll('.star')
+  const thanksMessage = document.getElementById('thanks-message')
+
+  let hoverValue = 0
+
+  stars.forEach(star => {
+    const value = +star.dataset.value
+
+    // Hover-Effekt
+    star.addEventListener('mouseenter', () => {
+      hoverValue = value
+      stars.forEach(s => {
+        s.classList.toggle('hover', +s.dataset.value <= hoverValue)
       })
-      await supabase.from('feedback').insert([{ email, stars: v }])
+    })
+
+    star.addEventListener('mouseleave', () => {
+      stars.forEach(s => s.classList.remove('hover'))
+    })
+
+    // Klick
+    star.addEventListener('click', async () => {
+      const email = (await supabase.auth.getUser()).data.user.email
+
+      stars.forEach(s => {
+        s.classList.toggle('selected', +s.dataset.value <= value)
+      })
+
+      await supabase.from('feedback').insert([{ email, stars: value }])
+
+      // Danke anzeigen
+      thanksMessage.style.display = 'block'
+      setTimeout(() => {
+        thanksMessage.style.display = 'none'
+      }, 4000)
     })
   })
-})
+
