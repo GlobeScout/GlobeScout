@@ -6,47 +6,42 @@ const supabase = createClient(
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im52amdyZXdzaGRwd2JlYmJrbWlxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyMjI0NjgsImV4cCI6MjA2Mjc5ODQ2OH0.uUVy7mC9EmSeDVqLdmWwTV0FouLZj97_fdbq8yAMufM'
 )
 
-let COUNTRIES = []
-
-// DOM Ready
 document.addEventListener('DOMContentLoaded', async () => {
   const { data: { user }, error: userError } = await supabase.auth.getUser()
   if (!user || userError) return (window.location.href = 'index.html')
-
   const email = user.email
 
   // Länder laden
   const { data: countriesData, error: countriesError } = await supabase
-  .from('countries')
-  .select('*')
+    .from('countries')
+    .select('*')
 
-console.log("Supabase DATA:", countriesData)
-console.log("Supabase ERROR:", countriesError)
-
-
-  if (countriesError) {
+  if (countriesError || !countriesData) {
     console.error('Fehler beim Laden der Länder:', countriesError)
     return
   }
 
-  COUNTRIES = countriesData
+  const COUNTRIES = countriesData
 
-  // Logout
+  // 🔄 Debug-Ausgabe
+  console.log('Länder geladen:', COUNTRIES)
+
+  // --- Logout
   document.getElementById('logout-button')
     .addEventListener('click', async () => {
       await supabase.auth.signOut()
       location.href = 'index.html'
     })
 
-  // Formular-Verarbeitung
+  // --- Formular
   document.getElementById('profile-form')
     .addEventListener('submit', async (e) => {
       e.preventDefault()
 
       const hobbies = document.getElementById('hobbies').value.toLowerCase()
-      const income  = +document.getElementById('income').value
+      const income = +document.getElementById('income').value
       const taxPref = +document.getElementById('taxPref').value
-      const prefs   = document.getElementById('preferences').value.toLowerCase()
+      const prefs = document.getElementById('preferences').value.toLowerCase()
 
       let best = null
       let bestPt = -Infinity
@@ -96,7 +91,6 @@ console.log("Supabase ERROR:", countriesError)
         // Nachtleben
         if (prefs.includes('nachtleben')) pts += c.nightlife
 
-        // Best Match aktualisieren
         if (pts > bestPt) {
           bestPt = pts
           best = c
@@ -113,11 +107,9 @@ console.log("Supabase ERROR:", countriesError)
   document.querySelectorAll('.star').forEach(star => {
     star.addEventListener('click', async () => {
       const v = +star.dataset.value
-      // UI aktualisieren
       document.querySelectorAll('.star').forEach(s => {
         s.classList.toggle('selected', +s.dataset.value <= v)
       })
-      // In Supabase speichern
       await supabase.from('feedback').insert([{ email, stars: v }])
     })
   })
