@@ -628,21 +628,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       // → UI
       document.getElementById('recommendation').innerHTML = resultText
 
-      // --- E‑MAIL via Edge Function
-      await fetch('https://nvjgrewshdpwbebbkmiq.functions.supabase.co/send-email', {
-        method : 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body   : JSON.stringify({
-          to      : email,
-          country : best.name,
-          cost    : best.cost,
-          safety  : best.safety
-        })
-      })
-      .then(() => alert('Empfehlung wurde gemailt!'))
-      .catch(err => console.error('Mail‑Fehler:', err))
-    })
-
+    
   // ⭐ Feedback (1–5)
   document.querySelectorAll('.star').forEach(star => {
     star.addEventListener('click', async () => {
