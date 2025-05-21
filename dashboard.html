@@ -5,61 +5,76 @@
   <title>GlobeScout Dashboard</title>
   <script type="module" src="dashboard.js"></script>
   <style>
-    body {
-    background: white;
+  body {
+    background-image: url('background2.png'); /* Dateiname genau hier eintragen */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     font-family: sans-serif;
     text-align: center;
     padding: 2rem;
+    color: #000;
   }
 
-    input, select, textarea {
-      display: block;
-      margin: 1rem auto;
-      padding: 0.5rem;
-      width: 80%;
-      max-width: 400px;
-    }
+  form, #recommendation, #feedback, #logout-container {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1rem auto;
+    max-width: 500px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
 
-    button {
-      margin-top: 1rem;
-      padding: 1rem 2rem;
-      font-size: 1rem;
-      border: none;
-      background-color: #4caf50;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
-    }
+  input, select, textarea {
+    display: block;
+    margin: 1rem auto;
+    padding: 0.5rem;
+    width: 80%;
+    max-width: 400px;
+  }
 
-    button:hover {
-      background-color: #388e3c;
-    }
+  button {
+    margin-top: 1rem;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    border: none;
+    background-color: #4caf50;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+  }
 
-    #recommendation {
-      margin-top: 2rem;
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
+  button:hover {
+    background-color: #388e3c;
+  }
 
-    .stars {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-top: 2rem;
-    }
+  #recommendation {
+    margin-top: 2rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
 
-    .star {
-  font-size: 2.4rem;
-  cursor: pointer;
-  color: lightgray;
-  transition: color 0.2s;
-}
+  .stars {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
 
-.star.hover,
-.star.selected {
-  color: gold;
-}
-  </style>
+  .star {
+    font-size: 2.4rem;
+    cursor: pointer;
+    color: lightgray;
+    transition: color 0.2s;
+  }
+
+  .star.hover,
+  .star.selected {
+    color: gold;
+  }
+</style>
+
 </head>
 
 <body>
