@@ -1,6 +1,6 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-// Supabase
+// Supabase-Client
 const supabase = createClient(
   'https://nvjgrewshdpwbebbkmiq.supabase.co',
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im52amdyZXdzaGRwd2JlYmJrbWlxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyMjI0NjgsImV4cCI6MjA2Mjc5ODQ2OH0.uUVy7mC9EmSeDVqLdmWwTV0FouLZj97_fdbq8yAMufM'
@@ -334,8 +334,7 @@ const COUNTRIES = [
     lgbtFriendly: 4
   }
 ]
-
-// ⚙️ Bewertung der Länder basierend auf Nutzereingaben
+// ⚙️ Länder bewerten basierend auf Nutzereingaben
 export async function scoreCountries(formData) {
   const {
     budget,
@@ -350,26 +349,26 @@ export async function scoreCountries(formData) {
     lgbtImportance,
     healthcareImportance,
     visaEaseImportance,
-    importanceIncome // neu, als Gewichtung
+    importanceIncome
   } = formData
 
   const scores = COUNTRIES.map(country => {
     let score = 0
 
-    // Kostenbewertung (Kosten ≤ Budget geben mehr Punkte)
+    // Kostenbewertung
     score += Math.max(0, (budget - country.cost)) * 2
 
-    // Wichtigkeit vom Einkommen: weniger dominant (25% Gewicht)
+    // Einkommen mit reduzierter Wichtigkeit
     if (income) {
       score += (income / country.cost) * 10 * (importanceIncome || 0.25)
     }
 
-    // Remote-Arbeit möglich
+    // Remote Work
     if (remoteWork && country.remoteFriendly) {
       score += 10
     }
 
-    // Klima (z.B. warm, cold, temperate)
+    // Klima
     if (preferredClimate && country.climate === preferredClimate) {
       score += 10
     }
@@ -379,7 +378,7 @@ export async function scoreCountries(formData) {
       score += 10
     }
 
-    // Hobbies & Aktivitäten
+    // Hobbies und Aktivitäten
     if (hobbies) {
       if (hobbies.includes('surf') && country.surf) score += 8
       if (hobbies.includes('hiking') && country.hiking) score += 8
@@ -414,7 +413,7 @@ export async function scoreCountries(formData) {
       score += country.healthcare * (healthcareImportance / 10)
     }
 
-    // Visafreundlichkeit
+    // Visa-Ease
     if (visaEaseImportance) {
       score += country.visaEase * (visaEaseImportance / 10)
     }
@@ -422,44 +421,38 @@ export async function scoreCountries(formData) {
     return { country: country.name, score: Math.round(score) }
   })
 
-  // Sortiere Länder nach Score absteigend
+  // Sortiere absteigend
   scores.sort((a, b) => b.score - a.score)
 
   return scores
 }
 
+// ⚙️ Feedback speichern
+export async function saveFeedback(feedbackData) {
+  // feedbackData z.B. { userId, country, rating, comment }
+  const { data, error } = await supabase
+    .from('feedback')
+    .insert([feedbackData])
 
-      if (!best) best = COUNTRIES[0]                 // Fallback
-      const resultText = `🏆 Dein perfektes Land: <strong>${best.name}</strong>`
+  if (error) {
+    console.error('Fehler beim Speichern des Feedbacks:', error)
+    throw error
+  }
 
-      // → UI
-      document.getElementById('recommendation').innerHTML = resultText
+  return data
+}
 
-      // --- E‑MAIL via Edge Function
-      await fetch('https://nvjgrewshdpwbebbkmiq.functions.supabase.co/send-email', {
-        method : 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body   : JSON.stringify({
-          to      : email,
-          country : best.name,
-          cost    : best.cost,
-          safety  : best.safety
-        })
-      })
-      .then(() => alert('Empfehlung wurde gemailt!'))
-      .catch(err => console.error('Mail‑Fehler:', err))
-    })
+// ⚙️ Feedback abfragen (optional, z.B. für Anzeige)
+export async function getFeedbackForCountry(countryName) {
+  const { data, error } = await supabase
+    .from('feedback')
+    .select('*')
+    .eq('country', countryName)
 
-  // ⭐ Feedback (1–5)
-  document.querySelectorAll('.star').forEach(star => {
-    star.addEventListener('click', async () => {
-      const v = +star.dataset.value
-      // UI
-      document.querySelectorAll('.star').forEach(s => {
-        s.classList.toggle('selected', +s.dataset.value <= v)
-      })
-      // DB
-      await supabase.from('feedback').insert([{ email, stars: v }])
-    })
-  })
-})
+  if (error) {
+    console.error('Fehler beim Abrufen des Feedbacks:', error)
+    throw error
+  }
+
+  return data
+}
