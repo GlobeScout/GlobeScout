@@ -17,8 +17,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Länder laden
   const { data: countriesData, error: countriesError } = await supabase
-    .from('countries')
-    .select('*')
+  .from('countries')
+  .select('*')
+
+console.log("Supabase DATA:", countriesData)
+console.log("Supabase ERROR:", countriesError)
+
 
   if (countriesError) {
     console.error('Fehler beim Laden der Länder:', countriesError)
