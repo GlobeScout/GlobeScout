@@ -6,7 +6,7 @@
   <script type="module" src="dashboard.js"></script>
   <style>
     body {
-      background-image: url('background2.png'); /* Dein Bild im selben Ordner */
+      background-image: url('background2.png');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -19,7 +19,7 @@
 
     h1 {
       color: white;
-      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5); /* Lesbarkeit verbessern */
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
     }
 
     form, #recommendation, #feedback, #logout-container {
@@ -78,6 +78,12 @@
     .star.selected {
       color: gold;
     }
+
+    .feedback-msg {
+      font-size: 1rem;
+      color: green;
+      margin-top: 1rem;
+    }
   </style>
 </head>
 
@@ -96,7 +102,7 @@
 
   <div id="feedback">
     <p>Wie zufrieden bist du mit dem Ergebnis?</p>
-    <div>
+    <div class="stars">
       <span class="star" data-value="1">⭐</span>
       <span class="star" data-value="2">⭐</span>
       <span class="star" data-value="3">⭐</span>
