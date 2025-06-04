@@ -32,30 +32,39 @@ document.addEventListener('DOMContentLoaded', async () => {
       e.preventDefault()
 
       const hobbies = document.getElementById('hobbies').value.toLowerCase()
-      const income = +document.getElementById('income').value
-      const taxPref = +document.getElementById('taxPref').value
+      const income = +document.getElementById('income').value || 50000
+      const taxPref = +document.getElementById('taxPref').value || 25
       const prefs = document.getElementById('preferences').value.toLowerCase()
 
       let best = null
       let bestPt = -Infinity
+      let tiedCountries = []
 
       COUNTRIES.forEach(c => {
         let pts = 0
+
+        // Kostenbewertung (Gewichtung 1:1)
         pts -= Math.abs(c.cost - income / 50)
+
+        // Steuerbewertung (weniger Gewicht)
         if (c.taxRate !== null) {
           pts -= Math.abs(c.taxRate - taxPref) / 2
         }
 
+        // Präferenzen
         if (prefs.includes('sicherheit')) pts += c.safety / 10
         if (prefs.includes('warm') && c.climate === 'warm') pts += 5
         if (prefs.includes('kalt') && c.climate === 'cold') pts += 5
         if (prefs.includes('hot') && c.climate === 'hot') pts += 5
         if (prefs.includes('tropisch') && c.climate === 'tropical') pts += 5
         if (prefs.includes('temperiert') && c.climate === 'temperate') pts += 5
-
         if (prefs.includes('englisch') && c.lang.includes('english')) pts += 5
         if (prefs.includes('deutsch') && c.lang.includes('german')) pts += 5
+        if (prefs.includes('natur')) pts += c.nature || 0
+        if (prefs.includes('lgbt')) pts += c.lgbtFriendly || 0
+        if (prefs.includes('nachtleben')) pts += c.nightlife || 0
 
+        // Hobbys
         if (hobbies.includes('surfen') && c.surf) pts += 7
         if (hobbies.includes('ski') && c.climate === 'cold') pts += 4
 
@@ -65,17 +74,20 @@ document.addEventListener('DOMContentLoaded', async () => {
           })
         }
 
-        if (prefs.includes('natur')) pts += c.nature
-        if (prefs.includes('lgbt')) pts += c.lgbtFriendly
-        if (prefs.includes('nachtleben')) pts += c.nightlife
-
+        // Gleichstandbehandlung
         if (pts > bestPt) {
           bestPt = pts
-          best = c
+          tiedCountries = [c]
+        } else if (pts === bestPt) {
+          tiedCountries.push(c)
         }
       })
 
-      if (!best) best = COUNTRIES[0]
+      if (tiedCountries.length > 0) {
+        best = tiedCountries[Math.floor(Math.random() * tiedCountries.length)]
+      } else {
+        best = COUNTRIES[Math.floor(Math.random() * COUNTRIES.length)]
+      }
 
       const resultText = `🏆 Dein perfektes Land: <strong>${best.name}</strong>`
       document.getElementById('recommendation').innerHTML = resultText
@@ -105,7 +117,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       })
       await supabase.from('feedback').insert([{ email, stars: v }])
 
-      // Dankesnachricht anzeigen (nur einmal)
       if (!document.querySelector('.feedback-msg')) {
         const msg = document.createElement('p')
         msg.textContent = '🎉 Danke für dein Feedback!'
